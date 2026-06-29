@@ -2,6 +2,31 @@ from typing import List
 
 class Solution:
     def trap(self, height: List[int]) -> int:
+        left = []
+        lmax = 0
+        right = []
+        rmax = 0
+        for i in range(len(height)):
+            left.append(lmax)
+            h = height[i]
+            if h > lmax:
+                lmax = h
+            right.append(rmax)
+            h = height[len(height)-1-i]
+            if h > rmax:
+                rmax = h
+        right = right[::-1]
+        rain = []
+        for i in range(len(height)):
+            r = max(min(right[i],left[i])-height[i],0)
+            rain.append(r)
+        # print('H',height)
+        # print('L',left)
+        # print('R',right)
+        # print('=',rain)
+        return sum(rain)
+
+    def trap_naive(self, height: List[int]) -> int:
         def _fill(hh,left,right):
             border = min(left,right)
             if len(hh) == 0:
