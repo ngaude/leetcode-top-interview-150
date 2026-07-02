@@ -10,16 +10,14 @@ class TreeNode(object):
     def __str__(self):
         return str(self.val)
 
-    def show(self, level=0):
-        ret = "\t"*level + repr(self.val) + "\n"
-        if self.left:
-            ret += self.left.show(level + 1)
-        else:
-            ret += "\t"* (level+1) + "null\n"
+    def show(self, level=0,isleft=True):
+        ret = ''
         if self.right:
-            ret += self.right.show(level + 1)
-        else:
-            ret += "\t"* (level+1) + "null\n"
+            ret += self.right.show(level + 1,True)
+        
+        ret += '   '*level + ('--' if level==0 else ("/-" if isleft  else "\\-")) + ">" + repr(self.val) + "\n"
+        if self.left:
+            ret += self.left.show(level + 1,False)
         return ret
 
 class Solution:
@@ -47,7 +45,7 @@ class Solution:
             prev = curr
         prev.right = None
         prev.left = None
-        
+
 
 
 n = TreeNode(1,TreeNode(2,TreeNode(3),TreeNode(4)),TreeNode(5,None,TreeNode(6)))
